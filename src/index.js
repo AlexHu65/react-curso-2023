@@ -1,17 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+const valorQueNoCambia = 10;
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+let valorQueCambia = 1;
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+valorQueCambia = 20;
+
+let control = true;
+//variables de scope
+if(control){
+     //esta sentencia toma el valor anterior y lo suma segun el scope valorQueCambia = 10 + valorQueCambia;
+     // esta sentencia lo que hace es generar un nuevo valor para la variable, es decir una nueva varibale 
+    let valorQueCambia = 10;
+    console.log('Valor que cambia' , valorQueCambia);
+}

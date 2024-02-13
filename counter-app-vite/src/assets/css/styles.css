@@ -1,0 +1,11 @@
+html, body{ 
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+button{
+    padding: 15px;
+    font-size: 1.3rem;
+}

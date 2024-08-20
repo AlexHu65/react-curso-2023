@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export const AddCategory = ({setCategories, setError}) => {
+export const AddCategory = ({onNewCategory}) => {
 
     const [inputValue, setInputValue] = useState("");
 
@@ -10,18 +10,10 @@ export const AddCategory = ({setCategories, setError}) => {
     }
 
     //Prevenir el comportamiento del formulario
-    const onSubmit = (e) =>{
-        
+    const onSubmit = (e) => {
         e.preventDefault();
-        
-        if(inputValue.trim().length <= 1){
-            setError('La categoría no es válida');
-            return
-        }
-
-        setError('');
         setInputValue('');
-        setCategories(categories => [{id:categories.id + 1, value:inputValue}, ...categories]);
+        onNewCategory(inputValue);
     }
 
     return(

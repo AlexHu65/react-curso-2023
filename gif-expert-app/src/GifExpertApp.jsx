@@ -1,22 +1,42 @@
 import { useState } from "react";
 import { AddCategory } from "./components/AddCategory";
+import {GifGrid} from "./components/GifGrid";
 
 export const GifExpertApp = () => {
 
-    const [categories, setCategories ] = useState([{id: 1, value:'One punch'}]);
+    const [categories, setCategories ] = useState(['One Punch']);
     const [error, setError ] = useState("");
+
+    const onAddCategory = (newCategory) => {
+        
+        if(newCategory.trim().length <= 1){
+            setError('La categoría no es válida');
+            return
+        }
+
+        if(categories.includes(newCategory)) {
+            setError(`La categoría ${newCategory} ya está guardada`)
+        };
+
+        setCategories([newCategory, ...categories]);
+    }
 
     return (
         <>
             <h1>GifExpertApp</h1>
-            <AddCategory setCategories={setCategories} setError={setError}/>
+            <AddCategory 
+            // setCategories={setCategories} setError={setError} on es poque esta emitiendo algo
+            onNewCategory= {e => onAddCategory(e)}
+            />
             {
                 error && <small className="danger">{error}</small>
             }
-            {/* <button onClick={onAddCategory}> Agregar </button> */}
-            <ol>
-                {categories.map((category) => <li key={category.id}>{category.value}</li>)}
-            </ol>
+            {
+                categories.map(category => (
+                        <GifGrid key={category} category={category}/>
+                    )
+                )
+            }
         </>
     );
 }

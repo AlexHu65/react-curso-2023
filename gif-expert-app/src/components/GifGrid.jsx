@@ -1,17 +1,18 @@
 import { getGifs } from "../services/gifs";
 import { useState, useEffect } from "react";
+import { Card } from "./Card";
 
 export const GifGrid = ({category}) => {
     
-    const [gifs, setGifs] = useState([]);
+    const [images, seImages] = useState([]);
 
     //para consumir el fetch debe ser asincrona porque regresa un await, es la unica forma de manejar
     // este tipo de funciones
     const fetchData = async () => {
         
-        const response = await getGifs();
+        const response = await getGifs(category);
         
-        const {data} = await response.json();
+        const { data } = await response.json();
         
         const gifs = data.map(({ id, title, images: { downsized_medium: { url } } }) => ({
             id,
@@ -19,7 +20,7 @@ export const GifGrid = ({category}) => {
             url
         }));
 
-        setGifs(gifs);
+        seImages(gifs);
     };
 
     
@@ -30,13 +31,14 @@ export const GifGrid = ({category}) => {
 
     return (
         <>
-        <h2>{category}</h2>
-        {
-            gifs.map(gif => (
-                    <span>{gif.title}</span>
-                )
-            )
+            <h2>{category.toUpperCase()}</h2>
+            <div className="card-grid">
+            {
+                images.map(({id,title,url}) => (
+                    <Card key={id} id={id} title={title} url={url}/>
+                ))
             }
+            </div>
         </>
     )
 

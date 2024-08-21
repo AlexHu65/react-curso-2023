@@ -4,7 +4,7 @@ import {GifGrid} from "./components/GifGrid";
 
 export const GifExpertApp = () => {
 
-    const [categories, setCategories ] = useState(['One Punch']);
+    const [categories, setCategories ] = useState([]);
     const [error, setError ] = useState("");
 
     const onAddCategory = (newCategory) => {
@@ -23,10 +23,11 @@ export const GifExpertApp = () => {
 
     return (
         <>
-            <h1>GifExpertApp</h1>
+            <h1>Gif App / Search</h1>
             <AddCategory 
             // setCategories={setCategories} setError={setError} on es poque esta emitiendo algo
-            onNewCategory= {e => onAddCategory(e)}
+            onNewCategory= {onAddCategory}
+            // onNewCategory= {e => onAddCategory(e)}
             />
             {
                 error && <small className="danger">{error}</small>

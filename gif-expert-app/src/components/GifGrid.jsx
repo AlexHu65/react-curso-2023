@@ -1,41 +1,24 @@
-import { getGifs } from "../services/gifs";
-import { useState, useEffect } from "react";
-import { Card } from "./Card";
+import { GifCard } from "./";
+// import { getGifs } from "../services/gifs";
+import { useFetchGifs } from "../hooks/useFetchGifs";
 
 export const GifGrid = ({category}) => {
     
-    const [images, seImages] = useState([]);
-
-    //para consumir el fetch debe ser asincrona porque regresa un await, es la unica forma de manejar
-    // este tipo de funciones
-    const fetchData = async () => {
-        
-        const response = await getGifs(category);
-        
-        const { data } = await response.json();
-        
-        const gifs = data.map(({ id, title, images: { downsized_medium: { url } } }) => ({
-            id,
-            title,
-            url
-        }));
-
-        seImages(gifs);
-    };
-
-    
-    useEffect(() => {
-        fetchData();
-        // este arreglo en el use useEffect, nos indica que se ejecuta una sola vez
-    }, []);
+    const {images, isLoading}  = useFetchGifs(category);
 
     return (
         <>
-            <h2>{category.toUpperCase()}</h2>
+            <h3>{category.toUpperCase()}</h3>
+            {
+                isLoading && (
+                    <h2>Cargando ...</h2>
+                )
+            }
             <div className="card-grid">
             {
-                images.map(({id,title,url}) => (
-                    <Card key={id} id={id} title={title} url={url}/>
+                images.map((image) => (
+                    // con el {...image} se exparsen todas las propiedades que se envian al componente
+                    <GifCard key={image.id} {...image}/>
                 ))
             }
             </div>
